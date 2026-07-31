@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#050505">
-  <meta name="description" content="Streamax C46 low-light intelligent blind spot camera for mining vehicle active safety.">
-  <title>C46 Blind Spot Camera | Streamax Mining</title>
+  <meta name="description" content="Explore six Streamax cameras, recorders, and displays designed for safer, more visible mining operations.">
+  <title>C46 | Streamax Mining Products</title>
   <style>
     @font-face {
       font-family: "HarmonyOS Sans";
@@ -150,6 +150,7 @@
       border-left: 2px solid transparent;
       background: transparent;
       color: var(--muted);
+      cursor: pointer;
       text-align: left;
     }
 
@@ -171,19 +172,24 @@
       color: var(--text);
     }
 
-    .product-tab:disabled {
-      color: #62625f;
-      cursor: not-allowed;
-      opacity: 0.66;
+    .product-tab:hover:not([aria-current="page"]) {
+      background: var(--surface);
+      color: var(--text);
     }
 
-    .prototype-note {
-      margin: 28px 10px 0;
-      padding-top: 22px;
-      border-top: 1px solid var(--line);
-      color: var(--subtle);
-      font-size: 12px;
-      line-height: 1.55;
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .product-page[hidden] {
+      display: none !important;
     }
 
     .main {
@@ -253,6 +259,10 @@
       content: "";
     }
 
+    .model-character {
+      display: inline-block;
+    }
+
     .hero-title {
       max-width: 18ch;
       margin-bottom: 24px;
@@ -306,6 +316,23 @@
       height: auto;
       object-fit: contain;
       filter: drop-shadow(0 28px 30px rgb(0 0 0 / 0.55));
+      opacity: 1;
+      transition: opacity 220ms ease;
+    }
+
+    .product-visual img[data-src] {
+      opacity: 0;
+    }
+
+    .product-page[data-product-page="c29n"] .product-visual img {
+      width: auto;
+      max-width: 100%;
+      max-height: 560px;
+    }
+
+    .product-page[data-product-page="c34"] .product-visual img,
+    .product-page[data-product-page="m10"] .product-visual img {
+      width: min(88%, 620px);
     }
 
     .value-strip {
@@ -401,6 +428,11 @@
       gap: clamp(30px, 5vw, 72px);
     }
 
+    .feature-pair--single {
+      grid-template-columns: minmax(0, 1fr);
+      max-width: 520px;
+    }
+
     .feature h4 {
       margin: 0 0 10px;
       color: var(--text);
@@ -465,12 +497,12 @@
     }
 
     @media (prefers-reduced-motion: no-preference) {
-      .hero-copy,
-      .product-visual {
+      .product-page:not([hidden]) .hero-copy,
+      .product-page:not([hidden]) .product-visual {
         animation: enter 620ms cubic-bezier(0.16, 1, 0.3, 1) both;
       }
 
-      .product-visual {
+      .product-page:not([hidden]) .product-visual {
         animation-delay: 100ms;
       }
 
@@ -568,6 +600,7 @@
         border: 1px solid var(--line);
         background: transparent;
         color: var(--muted);
+        cursor: pointer;
         font-size: 13px;
         font-weight: 700;
       }
@@ -578,9 +611,9 @@
         color: var(--accent-ink);
       }
 
-      .mobile-tab:disabled:not([aria-current="page"]) {
-        color: #62625f;
-        opacity: 0.68;
+      .mobile-tab:hover:not([aria-current="page"]) {
+        border-color: var(--line-strong);
+        color: var(--text);
       }
 
       .content {
@@ -633,6 +666,16 @@
 
       .product-visual img {
         width: 100%;
+      }
+
+      .product-page[data-product-page="c29n"] .product-visual img {
+        width: auto;
+        max-height: 310px;
+      }
+
+      .product-page[data-product-page="c34"] .product-visual img,
+      .product-page[data-product-page="m10"] .product-visual img {
+        width: min(88%, 520px);
       }
 
       .value-strip {
@@ -724,45 +767,43 @@
       <nav aria-label="Mining product range">
         <ul class="product-nav">
           <li>
-            <button class="product-tab" type="button" aria-current="page">
+            <button class="product-tab product-select" type="button" data-product="c46" aria-controls="product-c46" aria-current="page">
               <strong>C46</strong>
               <span>Blind Spot Camera</span>
             </button>
           </li>
           <li>
-            <button class="product-tab" type="button" disabled aria-label="C53 content will be added after prototype approval">
+            <button class="product-tab product-select" type="button" data-product="c53" aria-controls="product-c53">
               <strong>C53</strong>
               <span>Dual-Lens Guardian</span>
             </button>
           </li>
           <li>
-            <button class="product-tab" type="button" disabled aria-label="C29N content will be added after prototype approval">
+            <button class="product-tab product-select" type="button" data-product="c29n" aria-controls="product-c29n">
               <strong>C29N</strong>
               <span>Driver Monitoring</span>
             </button>
           </li>
           <li>
-            <button class="product-tab" type="button" disabled aria-label="C34 content will be added after prototype approval">
+            <button class="product-tab product-select" type="button" data-product="c34" aria-controls="product-c34">
               <strong>C34</strong>
               <span>Cabin Camera</span>
             </button>
           </li>
           <li>
-            <button class="product-tab" type="button" disabled aria-label="M10 content will be added after prototype approval">
+            <button class="product-tab product-select" type="button" data-product="m10" aria-controls="product-m10">
               <strong>M10</strong>
               <span>Mobile DVR</span>
             </button>
           </li>
           <li>
-            <button class="product-tab" type="button" disabled aria-label="MP9 content will be added after prototype approval">
+            <button class="product-tab product-select" type="button" data-product="mp9" aria-controls="product-mp9">
               <strong>MP9</strong>
               <span>SerDes Screen</span>
             </button>
           </li>
         </ul>
       </nav>
-
-      <p class="prototype-note">C46 is the active style prototype. The remaining products are shown to demonstrate the final navigation structure.</p>
     </aside>
 
     <main class="main" id="product-content">
@@ -775,102 +816,581 @@
         </div>
         <nav aria-label="Mining product range">
           <ul class="mobile-product-nav">
-            <li><button class="mobile-tab" type="button" aria-current="page">C46</button></li>
-            <li><button class="mobile-tab" type="button" disabled aria-label="C53 content will be added after prototype approval">C53</button></li>
-            <li><button class="mobile-tab" type="button" disabled aria-label="C29N content will be added after prototype approval">C29N</button></li>
-            <li><button class="mobile-tab" type="button" disabled aria-label="C34 content will be added after prototype approval">C34</button></li>
-            <li><button class="mobile-tab" type="button" disabled aria-label="M10 content will be added after prototype approval">M10</button></li>
-            <li><button class="mobile-tab" type="button" disabled aria-label="MP9 content will be added after prototype approval">MP9</button></li>
+            <li><button class="mobile-tab product-select" type="button" data-product="c46" aria-controls="product-c46" aria-current="page">C46</button></li>
+            <li><button class="mobile-tab product-select" type="button" data-product="c53" aria-controls="product-c53">C53</button></li>
+            <li><button class="mobile-tab product-select" type="button" data-product="c29n" aria-controls="product-c29n">C29N</button></li>
+            <li><button class="mobile-tab product-select" type="button" data-product="c34" aria-controls="product-c34">C34</button></li>
+            <li><button class="mobile-tab product-select" type="button" data-product="m10" aria-controls="product-m10">M10</button></li>
+            <li><button class="mobile-tab product-select" type="button" data-product="mp9" aria-controls="product-mp9">MP9</button></li>
           </ul>
         </nav>
       </header>
 
       <div class="content">
-        <section class="hero" aria-labelledby="c46-title">
-          <div class="hero-copy">
-            <p class="eyebrow">Mining active safety</p>
-            <h1 class="model" id="c46-title">C46</h1>
-            <p class="hero-title">Low-Light Blind Spot Camera</p>
-            <p class="hero-summary">Enhanced near-field warning in low-light scenarios with compact installation, wide coverage, and on-device AI recognition.</p>
-          </div>
+        <article
+          class="product-page"
+          id="product-c46"
+          data-product-page="c46"
+          data-page-title="C46 | Streamax Mining Products"
+          data-description="Streamax C46 low-light blind spot camera for active safety around mining vehicles."
+        >
+          <section class="hero" aria-labelledby="c46-title">
+            <div class="hero-copy">
+              <p class="eyebrow">Mining active safety</p>
+              <h1 class="model" id="c46-title">C46</h1>
+              <p class="hero-title">Low-Light Blind Spot Camera</p>
+              <p class="hero-summary">Enhanced near-field warning in low-light scenarios with compact installation, wide coverage, and on-device AI recognition.</p>
+            </div>
 
-          <figure class="product-visual" aria-label="C46 low-light intelligent blind spot camera">
-            <img
-              src="./assets/c46-product.webp"
-              width="1600"
-              height="1012"
-              alt="Streamax C46 low-light intelligent blind spot camera"
-              fetchpriority="high"
-              decoding="async"
-            >
-          </figure>
-        </section>
+            <figure class="product-visual" aria-label="C46 low-light intelligent blind spot camera">
+              <img
+                src="./assets/c46-product.webp"
+                width="1600"
+                height="1012"
+                alt="Streamax C46 low-light intelligent blind spot camera"
+                fetchpriority="high"
+                decoding="async"
+              >
+            </figure>
+          </section>
 
-        <ul class="value-strip" aria-label="C46 core value">
-          <li class="value-item">
-            <strong>Low-Light Clarity</strong>
-            <span>Improves pedestrian and vehicle recognition in complex lighting conditions.</span>
-          </li>
-          <li class="value-item">
-            <strong>175° Near-Field Coverage</strong>
-            <span>Ultra-wide-angle imaging expands the vehicle's close-range blind spot coverage.</span>
-          </li>
-          <li class="value-item">
-            <strong>Edge AI Recognition</strong>
-            <span>Recognizes pedestrians and vehicles to support active safety warning linkage.</span>
-          </li>
-        </ul>
+          <ul class="value-strip" aria-label="C46 core value">
+            <li class="value-item">
+              <strong>Low-Light Clarity</strong>
+              <span>Improves pedestrian and vehicle recognition in complex lighting conditions.</span>
+            </li>
+            <li class="value-item">
+              <strong>175° Near-Field Coverage</strong>
+              <span>Ultra-wide-angle imaging expands the vehicle's close-range blind spot coverage.</span>
+            </li>
+            <li class="value-item">
+              <strong>Edge AI Recognition</strong>
+              <span>Recognizes pedestrians and vehicles to support active safety warning linkage.</span>
+            </li>
+          </ul>
 
-        <section class="capabilities" aria-labelledby="capabilities-title">
-          <div class="section-heading">
-            <h2 id="capabilities-title">Product capabilities</h2>
-            <p>Intelligent IPC camera terminal with built-in AI computing power, capable of independently recognizing blind spot targets.</p>
-          </div>
+          <section class="capabilities" aria-labelledby="c46-capabilities-title">
+            <div class="section-heading">
+              <h2 id="c46-capabilities-title">Product capabilities</h2>
+              <p>Intelligent IPC camera terminal with built-in AI computing power, capable of independently recognizing blind spot targets.</p>
+            </div>
 
-          <div class="feature-groups">
-            <section class="feature-group" aria-labelledby="vision-group">
-              <h3 id="vision-group">Vision</h3>
-              <div class="feature-pair">
-                <article class="feature">
-                  <h4>Intelligent Blacklight Full-Color Night Vision</h4>
-                  <p>Low-light imaging delivers clearer color images in insufficient lighting conditions, improving pedestrian and vehicle recognition.</p>
-                </article>
-                <article class="feature">
-                  <h4>175° Ultra-Wide Horizontal Field of View</h4>
-                  <p>A 175° horizontal wide-angle lens expands near-field coverage and helps drivers detect side and close-range blind spot risks earlier.</p>
-                </article>
-              </div>
-            </section>
+            <div class="feature-groups">
+              <section class="feature-group" aria-labelledby="c46-vision-group">
+                <h3 id="c46-vision-group">Vision</h3>
+                <div class="feature-pair">
+                  <article class="feature">
+                    <h4>Intelligent Blacklight Full-Color Night Vision</h4>
+                    <p>Low-light imaging delivers clearer color images in insufficient lighting conditions, improving pedestrian and vehicle recognition.</p>
+                  </article>
+                  <article class="feature">
+                    <h4>175° Ultra-Wide Horizontal Field of View</h4>
+                    <p>A 175° horizontal wide-angle lens expands near-field coverage and helps drivers detect side and close-range blind spot risks earlier.</p>
+                  </article>
+                </div>
+              </section>
 
-            <section class="feature-group" aria-labelledby="safety-group">
-              <h3 id="safety-group">Safety</h3>
-              <div class="feature-pair">
-                <article class="feature">
-                  <h4>Edge AI Active Safety Warning</h4>
-                  <p>Built-in AI supports pedestrian and vehicle recognition in blind spots and can link with in-cab and external audible-visual alarm devices.</p>
-                </article>
-                <article class="feature">
-                  <h4>Compact Close-Fit Installation Design</h4>
-                  <p>The compact body installs close to the vehicle, reducing collision and scraping risks in narrow spaces or close-range operations.</p>
-                </article>
-              </div>
-            </section>
+              <section class="feature-group" aria-labelledby="c46-safety-group">
+                <h3 id="c46-safety-group">Safety</h3>
+                <div class="feature-pair">
+                  <article class="feature">
+                    <h4>Edge AI Active Safety Warning</h4>
+                    <p>Built-in AI supports pedestrian and vehicle recognition in blind spots and can link with in-cab and external audible-visual alarm devices.</p>
+                  </article>
+                  <article class="feature">
+                    <h4>Compact Close-Fit Installation Design</h4>
+                    <p>The compact body installs close to the vehicle, reducing collision and scraping risks in narrow spaces or close-range operations.</p>
+                  </article>
+                </div>
+              </section>
 
-            <section class="feature-group" aria-labelledby="deployment-group">
-              <h3 id="deployment-group">Deployment</h3>
-              <div class="feature-pair">
-                <article class="feature">
-                  <h4>IP69K Mining-Grade Protection</h4>
-                  <p>IP69K protection supports operation around mud, water, dust, high-pressure washing, and high vibration.</p>
-                </article>
-                <article class="feature">
-                  <h4>Multi-Source Data and System Integration</h4>
-                  <p>Supports network, RS232, RS485, vehicle speed, turn signal, GPS information, video recording, event records, and upload.</p>
-                </article>
-              </div>
-            </section>
-          </div>
-        </section>
+              <section class="feature-group" aria-labelledby="c46-deployment-group">
+                <h3 id="c46-deployment-group">Deployment</h3>
+                <div class="feature-pair">
+                  <article class="feature">
+                    <h4>IP69K Mining-Grade Protection</h4>
+                    <p>IP69K protection supports operation around mud, water, dust, high-pressure washing, and high vibration.</p>
+                  </article>
+                  <article class="feature">
+                    <h4>Multi-Source Data and System Integration</h4>
+                    <p>Supports network, RS232, RS485, vehicle speed, turn signal, GPS information, video recording, event records, and upload.</p>
+                  </article>
+                </div>
+              </section>
+            </div>
+          </section>
+        </article>
+
+        <article
+          class="product-page"
+          id="product-c53"
+          data-product-page="c53"
+          data-page-title="C53 | Streamax Mining Products"
+          data-description="Streamax C53 dual-lens blind spot guardian for open-pit mining trucks."
+          hidden
+        >
+          <section class="hero" aria-labelledby="c53-title">
+            <div class="hero-copy">
+              <p class="eyebrow">Open-pit blind spot protection</p>
+              <h1 class="model" id="c53-title">C53</h1>
+              <p class="hero-title">Dual-Lens Blind Spot Guardian</p>
+              <p class="hero-summary">Dual-lens coverage combines near-field overhead and rear-side visibility around open-pit mining trucks.</p>
+            </div>
+
+            <figure class="product-visual" aria-label="C53 dual-lens blind spot guardian">
+              <img
+                data-src="./assets/c53-product.webp"
+                width="741"
+                height="533"
+                alt="Streamax C53 dual-lens blind spot guardian"
+                loading="lazy"
+                decoding="async"
+              >
+            </figure>
+          </section>
+
+          <ul class="value-strip" aria-label="C53 core value">
+            <li class="value-item">
+              <strong>Dual-Lens Coverage</strong>
+              <span>Covers near-field overhead and rear-side distant blind spots.</span>
+            </li>
+            <li class="value-item">
+              <strong>AI Risk Detection</strong>
+              <span>Identifies pedestrians and pickup trucks around large mining vehicles.</span>
+            </li>
+            <li class="value-item">
+              <strong>Open-Pit Durability</strong>
+              <span>Built for dust, vibration, rain, and harsh outdoor mining conditions.</span>
+            </li>
+          </ul>
+
+          <section class="capabilities" aria-labelledby="c53-capabilities-title">
+            <div class="section-heading">
+              <h2 id="c53-capabilities-title">Dual-lens perception, active blind spot protection</h2>
+              <p>Smart IPC coverage for near-field, rear-side, and expandable front blind spots, with onboard detection and linked warnings.</p>
+            </div>
+
+            <div class="feature-groups">
+              <section class="feature-group" aria-labelledby="c53-coverage-group">
+                <h3 id="c53-coverage-group">Coverage</h3>
+                <div class="feature-pair">
+                  <article class="feature">
+                    <h4>Dual-Lens Blind Spot Coverage</h4>
+                    <p>Covers both near-field overhead and rear-side distant blind spots.</p>
+                  </article>
+                  <article class="feature">
+                    <h4>Expandable Front Blind Spot Coverage</h4>
+                    <p>Supports an additional AHD camera to cover the front near-field blind spot.</p>
+                  </article>
+                </div>
+              </section>
+
+              <section class="feature-group" aria-labelledby="c53-safety-group">
+                <h3 id="c53-safety-group">Safety</h3>
+                <div class="feature-pair">
+                  <article class="feature">
+                    <h4>Pedestrian and Pickup Truck Detection</h4>
+                    <p>Uses onboard AI to detect pedestrians and pickup trucks in mixed-traffic areas.</p>
+                  </article>
+                  <article class="feature">
+                    <h4>Linked Safety Alerts</h4>
+                    <p>Connects with in-cab and external alarms and displays for real-time warnings.</p>
+                  </article>
+                </div>
+              </section>
+
+              <section class="feature-group" aria-labelledby="c53-deployment-group">
+                <h3 id="c53-deployment-group">Deployment</h3>
+                <div class="feature-pair">
+                  <article class="feature">
+                    <h4>Dual-Channel Video Capture</h4>
+                    <p>Captures two video channels for wider and more complete blind spot visibility.</p>
+                  </article>
+                  <article class="feature">
+                    <h4>IP69K Mining-Grade Protection</h4>
+                    <p>Withstands dust, water, vibration, and harsh open-pit conditions.</p>
+                  </article>
+                </div>
+              </section>
+            </div>
+          </section>
+        </article>
+
+        <article
+          class="product-page"
+          id="product-c29n"
+          data-product-page="c29n"
+          data-page-title="C29N | Streamax Mining Products"
+          data-description="Streamax C29N AI-powered driver state monitoring camera."
+          hidden
+        >
+          <section class="hero" aria-labelledby="c29n-title">
+            <div class="hero-copy">
+              <p class="eyebrow">Driver state monitoring</p>
+              <h1 class="model" id="c29n-title">C29N</h1>
+              <p class="hero-title">AI-Powered Driver Monitoring</p>
+              <p class="hero-summary">Fatigue analysis, behavior detection, and adaptable visibility support safer driving in complex operations.</p>
+            </div>
+
+            <figure class="product-visual" aria-label="C29N driver state monitoring camera">
+              <img
+                data-src="./assets/c29n-product.webp"
+                width="456"
+                height="629"
+                alt="Streamax C29N driver state monitoring camera"
+                loading="lazy"
+                decoding="async"
+              >
+            </figure>
+          </section>
+
+          <ul class="value-strip" aria-label="C29N core value">
+            <li class="value-item">
+              <strong>Behavior and Fatigue Analysis</strong>
+              <span>Analyzes driver states to support proactive risk mitigation at the wheel.</span>
+            </li>
+            <li class="value-item">
+              <strong>Instant On-Site Response</strong>
+              <span>Edge computing processes driver events locally for timely warnings.</span>
+            </li>
+            <li class="value-item">
+              <strong>Adaptive Vision</strong>
+              <span>Supports complex operations with infrared visibility and flexible driver framing.</span>
+            </li>
+          </ul>
+
+          <section class="capabilities" aria-labelledby="c29n-capabilities-title">
+            <div class="section-heading">
+              <h2 id="c29n-capabilities-title">Focused on the driver, securing the journey</h2>
+              <p>Driver monitoring combines fatigue analysis, field-trained recognition, all-weather visibility, and local AI processing.</p>
+            </div>
+
+            <div class="feature-groups">
+              <section class="feature-group" aria-labelledby="c29n-recognition-group">
+                <h3 id="c29n-recognition-group">Recognition</h3>
+                <div class="feature-pair">
+                  <article class="feature">
+                    <h4>Accurate Fatigue Detection</h4>
+                    <p>Detects open-eye fatigue and reduces false alarms.</p>
+                  </article>
+                  <article class="feature">
+                    <h4>Field-Trained AI</h4>
+                    <p>Recognizes drivers wearing masks and helmets.</p>
+                  </article>
+                </div>
+              </section>
+
+              <section class="feature-group" aria-labelledby="c29n-visibility-group">
+                <h3 id="c29n-visibility-group">Visibility</h3>
+                <div class="feature-pair">
+                  <article class="feature">
+                    <h4>All-Weather Visibility</h4>
+                    <p>940nm infrared illumination supports operation at 0 Lux.</p>
+                  </article>
+                  <article class="feature">
+                    <h4>Flexible Driver Framing</h4>
+                    <p>Wide field of view combines with an auto-rotating G-sensor.</p>
+                  </article>
+                </div>
+              </section>
+
+              <section class="feature-group" aria-labelledby="c29n-processing-group">
+                <h3 id="c29n-processing-group">Processing</h3>
+                <div class="feature-pair">
+                  <article class="feature">
+                    <h4>Edge AI Processing</h4>
+                    <p>Processes smoking, calling, and distraction detection locally.</p>
+                  </article>
+                  <article class="feature">
+                    <h4>HD Behavior Capture</h4>
+                    <p>1280x800 at 20fps captures clear driver details.</p>
+                  </article>
+                </div>
+              </section>
+            </div>
+          </section>
+        </article>
+
+        <article
+          class="product-page"
+          id="product-c34"
+          data-product-page="c34"
+          data-page-title="C34 | Streamax Mining Products"
+          data-description="Streamax C34 cabin compliance and surveillance camera."
+          hidden
+        >
+          <section class="hero" aria-labelledby="c34-title">
+            <div class="hero-copy">
+              <p class="eyebrow">Cabin safety and compliance</p>
+              <h1 class="model" id="c34-title">C34</h1>
+              <p class="hero-title">Cabin Compliance and Surveillance</p>
+              <p class="hero-summary">Clear cabin insights combine behavior detection, adaptive imaging, rugged protection, and audio capture.</p>
+            </div>
+
+            <figure class="product-visual" aria-label="C34 cabin compliance and surveillance camera">
+              <img
+                data-src="./assets/c34-product.webp"
+                width="540"
+                height="369"
+                alt="Streamax C34 cabin compliance and surveillance camera"
+                loading="lazy"
+                decoding="async"
+              >
+            </figure>
+          </section>
+
+          <ul class="value-strip" aria-label="C34 core value">
+            <li class="value-item">
+              <strong>Safer Driving Behaviors</strong>
+              <span>Supports standardized seatbelt and hands-off-wheel compliance monitoring.</span>
+            </li>
+            <li class="value-item">
+              <strong>Rugged Cabin Design</strong>
+              <span>IK10 protection and anti-vibration performance suit harsh environments.</span>
+            </li>
+            <li class="value-item">
+              <strong>24/7 Audio-Visual Recording</strong>
+              <span>Adaptive imaging and an automotive-grade microphone capture cabin activity.</span>
+            </li>
+          </ul>
+
+          <section class="capabilities" aria-labelledby="c34-capabilities-title">
+            <div class="section-heading">
+              <h2 id="c34-capabilities-title">Clear insights, complete coverage</h2>
+              <p>Cabin monitoring combines compliance algorithms, adaptive day and night imaging, clear audio, and vehicle-grade durability.</p>
+            </div>
+
+            <div class="feature-groups">
+              <section class="feature-group" aria-labelledby="c34-monitoring-group">
+                <h3 id="c34-monitoring-group">Monitoring</h3>
+                <div class="feature-pair">
+                  <article class="feature">
+                    <h4>Smart Behavior Detection</h4>
+                    <p>Built-in DSC algorithms detect seatbelt and hands-off-wheel violations.</p>
+                  </article>
+                  <article class="feature">
+                    <h4>Wide Cabin Coverage</h4>
+                    <p>1080P at 30FPS with a 104° horizontal field of view covers the cabin.</p>
+                  </article>
+                </div>
+              </section>
+
+              <section class="feature-group" aria-labelledby="c34-capture-group">
+                <h3 id="c34-capture-group">Capture</h3>
+                <div class="feature-pair">
+                  <article class="feature">
+                    <h4>24/7 Adaptive Imaging</h4>
+                    <p>IR-CUT, WDR, DNR, and 3m infrared support clear day and night monitoring.</p>
+                  </article>
+                  <article class="feature">
+                    <h4>Clear Audio Capture</h4>
+                    <p>An automotive-grade microphone captures audio from up to 5m away.</p>
+                  </article>
+                </div>
+              </section>
+
+              <section class="feature-group" aria-labelledby="c34-protection-group">
+                <h3 id="c34-protection-group">Protection</h3>
+                <div class="feature-pair feature-pair--single">
+                  <article class="feature">
+                    <h4>Rugged Dome Design</h4>
+                    <p>IK10 protection combines with vehicle-grade anti-vibration performance.</p>
+                  </article>
+                </div>
+              </section>
+            </div>
+          </section>
+        </article>
+
+        <article
+          class="product-page"
+          id="product-m10"
+          data-product-page="m10"
+          data-page-title="M10 | Streamax Mining Products"
+          data-description="Streamax M10 mobile DVR for recording, AI, storage, and mining vehicle integration."
+          hidden
+        >
+          <section class="hero" aria-labelledby="m10-title">
+            <div class="hero-copy">
+              <p class="eyebrow">Mobile video intelligence</p>
+              <h1 class="model" id="m10-title">M10</h1>
+              <p class="hero-title">The Intelligent Brain of Smarter Mining</p>
+              <p class="hero-summary">Multi-channel recording, scalable AI, expandable storage, vehicle data, and an open Android ecosystem.</p>
+            </div>
+
+            <figure class="product-visual" aria-label="M10 mobile digital video recorder">
+              <img
+                data-src="./assets/m10-product.webp"
+                width="603"
+                height="337"
+                alt="Streamax M10 mobile digital video recorder"
+                loading="lazy"
+                decoding="async"
+              >
+            </figure>
+          </section>
+
+          <ul class="value-strip" aria-label="M10 core value">
+            <li class="value-item">
+              <strong>Safety and Dispatch</strong>
+              <span>Supports safety management and intelligent dispatch workflows.</span>
+            </li>
+            <li class="value-item">
+              <strong>Vehicle Data Integration</strong>
+              <span>CAN integration supports professional vehicle health monitoring.</span>
+            </li>
+            <li class="value-item">
+              <strong>Custom Development</strong>
+              <span>An open Android ecosystem supports rapid custom business applications.</span>
+            </li>
+          </ul>
+
+          <section class="capabilities" aria-labelledby="m10-capabilities-title">
+            <div class="section-heading">
+              <h2 id="m10-capabilities-title">All you need, all in one</h2>
+              <p>One mining-ready MDVR combines high-definition recording, expandable storage, AI computing, open applications, and vehicle data.</p>
+            </div>
+
+            <div class="feature-groups">
+              <section class="feature-group" aria-labelledby="m10-monitoring-group">
+                <h3 id="m10-monitoring-group">Monitoring</h3>
+                <div class="feature-pair">
+                  <article class="feature">
+                    <h4>Multi-Channel HD Monitoring</h4>
+                    <p>Records 8 or 16 channels at 1080P and 30FPS with dual-screen display.</p>
+                  </article>
+                  <article class="feature">
+                    <h4>6TB Expandable Storage</h4>
+                    <p>Micro SD and dual M.2 SSD storage provide reliable local capacity.</p>
+                  </article>
+                </div>
+              </section>
+
+              <section class="feature-group" aria-labelledby="m10-intelligence-group">
+                <h3 id="m10-intelligence-group">Intelligence</h3>
+                <div class="feature-pair">
+                  <article class="feature">
+                    <h4>Scalable AI Power</h4>
+                    <p>6 TOPS of computing power supports customizable AI functions.</p>
+                  </article>
+                  <article class="feature">
+                    <h4>Open Android Ecosystem</h4>
+                    <p>Supports flexible integration and custom application development.</p>
+                  </article>
+                </div>
+              </section>
+
+              <section class="feature-group" aria-labelledby="m10-integration-group">
+                <h3 id="m10-integration-group">Integration</h3>
+                <div class="feature-pair">
+                  <article class="feature">
+                    <h4>Vehicle Data Integration</h4>
+                    <p>Dual CAN interfaces support professional vehicle data acquisition.</p>
+                  </article>
+                  <article class="feature">
+                    <h4>Mining-Ready Design</h4>
+                    <p>RTK positioning and SerDes output support harsh mining operations.</p>
+                  </article>
+                </div>
+              </section>
+            </div>
+          </section>
+        </article>
+
+        <article
+          class="product-page"
+          id="product-mp9"
+          data-product-page="mp9"
+          data-page-title="MP9 | Streamax Mining Products"
+          data-description="Streamax MP9 high-brightness SerDes screen for mining operations."
+          hidden
+        >
+          <section class="hero" aria-labelledby="mp9-title">
+            <div class="hero-copy">
+              <p class="eyebrow">Rugged on-site visibility</p>
+              <h1 class="model" id="mp9-title" aria-label="MP9"><span class="model-character" aria-hidden="true">M</span><span class="model-character" aria-hidden="true">P</span><span class="model-character" aria-hidden="true">9</span></h1>
+              <p class="hero-title">SerDes Screen Built to Last</p>
+              <p class="hero-summary">High brightness, anti-glare protection, rugged construction, and one-cable installation support clear on-site viewing.</p>
+            </div>
+
+            <figure class="product-visual" aria-label="MP9 high-brightness SerDes screen">
+              <img
+                data-src="./assets/mp9-product.webp"
+                width="1314"
+                height="750"
+                alt="Streamax MP9 high-brightness SerDes screen displaying mining camera views"
+                loading="lazy"
+                decoding="async"
+              >
+            </figure>
+          </section>
+
+          <ul class="value-strip" aria-label="MP9 core value">
+            <li class="value-item">
+              <strong>800 cd/m2 Brightness</strong>
+              <span>Automatic backlight adjustment supports clear outdoor visibility.</span>
+            </li>
+            <li class="value-item">
+              <strong>3A Anti-Glare Visibility</strong>
+              <span>Anti-reflective and anti-glare coating reduces reflection and glare.</span>
+            </li>
+            <li class="value-item">
+              <strong>One-Cable Installation</strong>
+              <span>A single cable carries both power and signal transmission.</span>
+            </li>
+          </ul>
+
+          <section class="capabilities" aria-labelledby="mp9-capabilities-title">
+            <div class="section-heading">
+              <h2 id="mp9-capabilities-title">Clarity meets durability</h2>
+              <p>The MP9 combines a bright display, digital HD transmission, mining-ready construction, and simplified installation.</p>
+            </div>
+
+            <div class="feature-groups">
+              <section class="feature-group" aria-labelledby="mp9-visibility-group">
+                <h3 id="mp9-visibility-group">Visibility</h3>
+                <div class="feature-pair">
+                  <article class="feature">
+                    <h4>High-Brightness Display</h4>
+                    <p>A 9-inch 800 cd/m2 screen includes automatic backlight adjustment.</p>
+                  </article>
+                  <article class="feature">
+                    <h4>Anti-Glare Visibility</h4>
+                    <p>3A anti-reflective and anti-glare coating reduces reflection and glare.</p>
+                  </article>
+                </div>
+              </section>
+
+              <section class="feature-group" aria-labelledby="mp9-protection-group">
+                <h3 id="mp9-protection-group">Protection</h3>
+                <div class="feature-pair">
+                  <article class="feature">
+                    <h4>All-in-One Rugged Design</h4>
+                    <p>An integrated dust-proof structure supports demanding worksites.</p>
+                  </article>
+                  <article class="feature">
+                    <h4>Durable Aluminum Frame</h4>
+                    <p>A stronger structure supports harsh mining environments.</p>
+                  </article>
+                </div>
+              </section>
+
+              <section class="feature-group" aria-labelledby="mp9-connection-group">
+                <h3 id="mp9-connection-group">Connection</h3>
+                <div class="feature-pair">
+                  <article class="feature">
+                    <h4>HD SerDes Display</h4>
+                    <p>Digital HD transmission restores on-site details.</p>
+                  </article>
+                  <article class="feature">
+                    <h4>One-Cable Installation</h4>
+                    <p>A single cable carries both power and signal transmission.</p>
+                  </article>
+                </div>
+              </section>
+            </div>
+          </section>
+        </article>
 
         <section class="cta-section" aria-labelledby="cta-title">
           <div>
@@ -880,7 +1400,86 @@
           <a class="cta" href="https://www.streamax.com/category/mining-solution.html" target="_blank" rel="noopener noreferrer">Explore more</a>
         </section>
       </div>
+      <p class="visually-hidden" id="product-announcer" role="status" aria-live="polite"></p>
     </main>
   </div>
+
+  <script>
+    (() => {
+      const productIds = ["c46", "c53", "c29n", "c34", "m10", "mp9"];
+      const validProducts = new Set(productIds);
+      const selectors = [...document.querySelectorAll(".product-select")];
+      const panels = [...document.querySelectorAll(".product-page")];
+      const description = document.querySelector('meta[name="description"]');
+      const announcer = document.querySelector("#product-announcer");
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+      let activeProduct = "";
+
+      function loadProductImage(panel) {
+        const image = panel.querySelector("img[data-src]");
+        if (!image) return;
+        image.src = image.dataset.src;
+        image.removeAttribute("data-src");
+      }
+
+      function activateProduct(productId, updateUrl = true) {
+        if (!validProducts.has(productId) || productId === activeProduct) return;
+
+        const activePanel = panels.find(
+          (panel) => panel.dataset.productPage === productId
+        );
+        if (!activePanel) return;
+
+        panels.forEach((panel) => {
+          panel.hidden = panel !== activePanel;
+        });
+        selectors.forEach((selector) => {
+          if (selector.dataset.product === productId) {
+            selector.setAttribute("aria-current", "page");
+          } else {
+            selector.removeAttribute("aria-current");
+          }
+        });
+
+        loadProductImage(activePanel);
+        document.title = activePanel.dataset.pageTitle;
+        description.content = activePanel.dataset.description;
+        activeProduct = productId;
+
+        if (updateUrl) {
+          history.replaceState(null, "", `#${productId}`);
+        }
+
+        const activeMobileSelector = document.querySelector(
+          `.mobile-bar [data-product="${productId}"]`
+        );
+        if (activeMobileSelector && window.matchMedia("(max-width: 899px)").matches) {
+          activeMobileSelector.scrollIntoView({
+            behavior: reduceMotion.matches ? "auto" : "smooth",
+            block: "nearest",
+            inline: "center",
+          });
+        }
+
+        window.scrollTo({ top: 0, behavior: "auto" });
+        announcer.textContent = `${activePanel.querySelector(".model").textContent} product details selected`;
+      }
+
+      selectors.forEach((selector) => {
+        selector.addEventListener("click", () => {
+          activateProduct(selector.dataset.product);
+        });
+      });
+
+      window.addEventListener("popstate", () => {
+        const productId = location.hash.slice(1).toLowerCase();
+        activateProduct(validProducts.has(productId) ? productId : "c46", false);
+      });
+
+      const initialProduct = location.hash.slice(1).toLowerCase();
+      activeProduct = "";
+      activateProduct(validProducts.has(initialProduct) ? initialProduct : "c46");
+    })();
+  </script>
 </body>
 </html>
