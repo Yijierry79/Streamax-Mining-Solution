@@ -377,7 +377,8 @@
 
     .image-lightbox[open] {
       display: grid;
-      place-items: center;
+      grid-template-rows: 60px minmax(0, 1fr) 36px;
+      place-items: stretch;
     }
 
     .image-lightbox::backdrop {
@@ -385,13 +386,19 @@
     }
 
     .lightbox-stage {
+      position: relative;
       display: grid;
+      grid-row: 2;
       width: 100%;
       height: 100%;
       place-items: start center;
       overflow: auto;
       overscroll-behavior: contain;
       -webkit-overflow-scrolling: touch;
+    }
+
+    .lightbox-stage:focus {
+      outline: none;
     }
 
     .lightbox-image {
@@ -421,8 +428,8 @@
       top: max(12px, env(safe-area-inset-top));
       right: max(12px, env(safe-area-inset-right));
       display: grid;
-      width: 44px;
-      height: 44px;
+      width: 36px;
+      height: 36px;
       padding: 0;
       place-items: center;
       border: 1px solid rgb(255 255 255 / 0.38);
@@ -430,8 +437,19 @@
       background: rgb(0 0 0 / 0.78);
       color: #fff;
       cursor: pointer;
-      font-size: 28px;
+      font-size: 23px;
       line-height: 1;
+    }
+
+    .lightbox-close::before {
+      position: absolute;
+      inset: -4px;
+      content: "";
+    }
+
+    .lightbox-close:focus-visible {
+      outline: none;
+      border-color: rgb(255 255 255 / 0.8);
     }
 
     .main {
@@ -818,11 +836,12 @@
         display: flex;
         gap: 8px;
         margin: 0;
-        padding: 9px 16px 10px;
+        padding: 9px 16px 10px 17px;
         overflow-x: auto;
         overscroll-behavior-inline: contain;
         scrollbar-width: none;
         list-style: none;
+        scroll-padding-left: 17px;
         scroll-snap-type: x proximity;
       }
 
@@ -832,7 +851,32 @@
 
       .mobile-product-nav li {
         flex: 0 0 auto;
+        scroll-margin-inline: 17px;
         scroll-snap-align: start;
+      }
+
+      .image-lightbox[open] {
+        grid-template-rows:
+          max(56px, calc(env(safe-area-inset-top) + 44px))
+          minmax(0, 1fr)
+          max(28px, env(safe-area-inset-bottom));
+      }
+
+      .image-lightbox .lightbox-stage {
+        place-items: center;
+        padding-inline: 12px;
+        overflow: hidden;
+      }
+
+      .image-lightbox[data-image-kind="vehicle"] .lightbox-image {
+        width: auto;
+        max-width: 100%;
+        max-height: 100%;
+      }
+
+      .lightbox-close {
+        top: max(10px, env(safe-area-inset-top));
+        right: max(12px, env(safe-area-inset-right));
       }
 
       .mobile-tab {
@@ -923,10 +967,13 @@
 
     @media (max-width: 899px) and (orientation: portrait) {
       .image-lightbox[data-image-kind="map"] .lightbox-image {
-        width: min(calc(100dvh - 24px), calc(141.34vw - 24px));
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: min(calc(100dvh - 112px), calc(141.34vw - 40px));
         max-width: none;
         max-height: none;
-        transform: rotate(90deg);
+        transform: translate(-50%, -50%) rotate(90deg);
       }
     }
 
@@ -1872,7 +1919,7 @@
   </div>
 
   <dialog class="image-lightbox" id="image-lightbox" aria-label="Enlarged brochure image">
-    <div class="lightbox-stage" data-lightbox-stage>
+    <div class="lightbox-stage" data-lightbox-stage tabindex="-1">
       <img class="lightbox-image" alt="">
     </div>
     <button class="lightbox-close" type="button" data-lightbox-close aria-label="Close enlarged image">×</button>
@@ -1946,6 +1993,8 @@
         lightboxImage.src = sourceImage.currentSrc || sourceImage.src;
         lightboxImage.alt = sourceImage.alt;
         if (!lightbox.open) lightbox.showModal();
+        lightboxStage.scrollTo({ top: 0, left: 0, behavior: "auto" });
+        lightboxStage.focus({ preventScroll: true });
 
         if (!requestFullscreen) return;
         try {
@@ -2041,11 +2090,19 @@
           `.mobile-bar [data-product="${productId}"]`
         );
         if (activeMobileSelector && window.matchMedia("(max-width: 899px)").matches) {
-          activeMobileSelector.scrollIntoView({
-            behavior: reduceMotion.matches ? "auto" : "smooth",
-            block: "nearest",
-            inline: "center",
-          });
+          const mobileNav = activeMobileSelector.closest(".mobile-product-nav");
+          if (productId === "solution-map" && mobileNav) {
+            mobileNav.scrollTo({
+              left: 0,
+              behavior: reduceMotion.matches ? "auto" : "smooth",
+            });
+          } else {
+            activeMobileSelector.scrollIntoView({
+              behavior: reduceMotion.matches ? "auto" : "smooth",
+              block: "nearest",
+              inline: "center",
+            });
+          }
         }
 
         window.scrollTo({ top: 0, behavior: "auto" });
