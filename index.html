@@ -67,7 +67,8 @@
     }
 
     button:focus-visible,
-    a:focus-visible {
+    a:focus-visible,
+    .expandable-image:focus-visible {
       outline: 3px solid var(--accent);
       outline-offset: 4px;
     }
@@ -106,20 +107,16 @@
     }
 
     .brand {
-      display: inline-flex;
-      align-items: baseline;
+      display: block;
+      width: 148px;
       margin: 0 10px 62px;
-      color: var(--text);
-      font-size: 28px;
-      font-weight: 500;
-      letter-spacing: -1.5px;
-      line-height: 1;
       text-decoration: none;
     }
 
-    .brand-x {
-      color: var(--accent);
-      font-weight: 700;
+    .brand-logo {
+      display: block;
+      width: 100%;
+      height: auto;
     }
 
     .nav-label {
@@ -318,19 +315,6 @@
       text-align: right;
     }
 
-    .map-viewer-shell:fullscreen {
-      display: grid;
-      grid-template-rows: auto minmax(0, 1fr);
-      padding: 0 18px 18px;
-      background: var(--bg);
-    }
-
-    .map-viewer-shell:fullscreen .map-viewer {
-      width: 100%;
-      height: 100%;
-      aspect-ratio: auto;
-    }
-
     .vehicle-solution-nav {
       display: flex;
       flex-wrap: wrap;
@@ -370,6 +354,84 @@
 
     .vehicle-solution-image[hidden] {
       display: none !important;
+    }
+
+    .expandable-image {
+      cursor: zoom-in;
+    }
+
+    .image-lightbox {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      max-width: none;
+      height: 100dvh;
+      max-height: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      border: 0;
+      background: #000;
+      color: var(--text);
+    }
+
+    .image-lightbox[open] {
+      display: grid;
+      place-items: center;
+    }
+
+    .image-lightbox::backdrop {
+      background: #000;
+    }
+
+    .lightbox-stage {
+      display: grid;
+      width: 100%;
+      height: 100%;
+      place-items: start center;
+      overflow: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .lightbox-image {
+      display: block;
+      width: auto;
+      max-width: 100%;
+      height: auto;
+      max-height: 100%;
+      object-fit: contain;
+      user-select: none;
+      -webkit-user-drag: none;
+      touch-action: pinch-zoom;
+    }
+
+    .image-lightbox[data-image-kind="map"] .lightbox-stage {
+      place-items: center;
+      overflow: hidden;
+    }
+
+    .image-lightbox[data-image-kind="vehicle"] .lightbox-image {
+      width: min(100%, 1426px);
+      max-height: none;
+    }
+
+    .lightbox-close {
+      position: fixed;
+      top: max(12px, env(safe-area-inset-top));
+      right: max(12px, env(safe-area-inset-right));
+      display: grid;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      place-items: center;
+      border: 1px solid rgb(255 255 255 / 0.38);
+      border-radius: 50%;
+      background: rgb(0 0 0 / 0.78);
+      color: #fff;
+      cursor: pointer;
+      font-size: 28px;
+      line-height: 1;
     }
 
     .main {
@@ -740,8 +802,8 @@
       }
 
       .mobile-bar .brand {
+        width: 116px;
         margin: 0;
-        font-size: 22px;
       }
 
       .mobile-bar-label {
@@ -856,6 +918,15 @@
 
       .map-source .viewer-hint {
         display: none;
+      }
+    }
+
+    @media (max-width: 899px) and (orientation: portrait) {
+      .image-lightbox[data-image-kind="map"] .lightbox-image {
+        width: min(calc(100dvh - 24px), calc(141.34vw - 24px));
+        max-width: none;
+        max-height: none;
+        transform: rotate(90deg);
       }
     }
 
@@ -1021,7 +1092,7 @@
   <div class="app-shell">
     <aside class="sidebar" aria-label="Product selection">
       <a class="brand" href="https://www.streamax.com/" target="_blank" rel="noopener noreferrer" aria-label="Streamax website">
-        Streama<span class="brand-x">x</span>
+        <img class="brand-logo" src="./assets/streamax-logo.png" width="148" height="17" alt="Streamax">
       </a>
 
       <p class="nav-label">Mining solutions</p>
@@ -1036,7 +1107,7 @@
           <li>
             <button class="product-tab product-tab--overview product-select" type="button" data-product="vehicle-solutions" aria-controls="product-vehicle-solutions">
               <strong>Complete Vehicle Solutions</strong>
-              <span>Haul, excavator, diesel</span>
+              <span>Haul, Excavator, Diesel</span>
             </button>
           </li>
         </ul>
@@ -1089,9 +1160,9 @@
       <header class="mobile-bar">
         <div class="mobile-bar-head">
           <a class="brand" href="https://www.streamax.com/" target="_blank" rel="noopener noreferrer" aria-label="Streamax website">
-            Streama<span class="brand-x">x</span>
+            <img class="brand-logo" src="./assets/streamax-logo.png" width="148" height="17" alt="Streamax">
           </a>
-          <span class="mobile-bar-label">Select product</span>
+          <span class="mobile-bar-label">Explore solutions</span>
         </div>
         <nav aria-label="Mining product range">
           <ul class="mobile-product-nav">
@@ -1132,13 +1203,19 @@
             </div>
             <div class="map-viewer" id="map-viewer">
               <img
+                class="expandable-image"
                 src="./assets/mining-solution-map.webp"
                 width="2400"
                 height="1698"
                 alt="Streamax mine safety management solution map covering surface and underground mining operations"
+                aria-label="Open mining solution map full screen"
+                role="button"
+                tabindex="0"
                 fetchpriority="high"
                 decoding="async"
                 data-scale="1"
+                data-expand-image
+                data-image-kind="map"
               >
             </div>
           </div>
@@ -1168,35 +1245,50 @@
 
           <div class="vehicle-solution-stage">
             <img
-              class="vehicle-solution-image"
+              class="vehicle-solution-image expandable-image"
               data-vehicle-image="haul-truck"
               data-src="./assets/haul-truck-solution.webp"
-              width="1620"
+              width="1426"
               height="2141"
               alt="Complete Streamax haul truck safety solution with vehicle, cameras, modules, and delivered value"
+              aria-label="Open haul truck solution full screen"
+              role="button"
+              tabindex="0"
               loading="lazy"
               decoding="async"
+              data-expand-image
+              data-image-kind="vehicle"
             >
             <img
-              class="vehicle-solution-image"
+              class="vehicle-solution-image expandable-image"
               data-vehicle-image="excavator"
               data-src="./assets/excavator-solution.webp"
-              width="1620"
+              width="1426"
               height="2141"
               alt="Complete Streamax excavator safety solution with vehicle, cameras, modules, and delivered value"
+              aria-label="Open excavator solution full screen"
+              role="button"
+              tabindex="0"
               loading="lazy"
               decoding="async"
+              data-expand-image
+              data-image-kind="vehicle"
               hidden
             >
             <img
-              class="vehicle-solution-image"
+              class="vehicle-solution-image expandable-image"
               data-vehicle-image="diesel-truck"
               data-src="./assets/diesel-truck-solution.webp"
-              width="1620"
+              width="1426"
               height="2141"
               alt="Complete Streamax diesel truck safety solution with vehicle, cameras, modules, and delivered value"
+              aria-label="Open diesel truck solution full screen"
+              role="button"
+              tabindex="0"
               loading="lazy"
               decoding="async"
+              data-expand-image
+              data-image-kind="vehicle"
               hidden
             >
           </div>
@@ -1779,6 +1871,13 @@
     </main>
   </div>
 
+  <dialog class="image-lightbox" id="image-lightbox" aria-label="Enlarged brochure image">
+    <div class="lightbox-stage" data-lightbox-stage>
+      <img class="lightbox-image" alt="">
+    </div>
+    <button class="lightbox-close" type="button" data-lightbox-close aria-label="Close enlarged image">×</button>
+  </dialog>
+
   <script>
     (() => {
       const productIds = [
@@ -1800,6 +1899,13 @@
       const vehicleImages = [
         ...document.querySelectorAll(".vehicle-solution-image"),
       ];
+      const expandableImages = [
+        ...document.querySelectorAll("[data-expand-image]"),
+      ];
+      const lightbox = document.querySelector("#image-lightbox");
+      const lightboxImage = lightbox?.querySelector(".lightbox-image");
+      const lightboxStage = lightbox?.querySelector("[data-lightbox-stage]");
+      const lightboxClose = lightbox?.querySelector("[data-lightbox-close]");
       const description = document.querySelector('meta[name="description"]');
       const announcer = document.querySelector("#product-announcer");
       const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -1816,6 +1922,65 @@
 
       function loadProductImage(panel) {
         loadImage(panel.querySelector("img[data-src]"));
+      }
+
+      async function closeImageLightbox() {
+        if (!lightbox?.open) return;
+        if (document.fullscreenElement === lightbox) {
+          await document.exitFullscreen().catch(() => {});
+        }
+        if (
+          screen.orientation &&
+          typeof screen.orientation.unlock === "function"
+        ) {
+          screen.orientation.unlock();
+        }
+        lightbox.close();
+        lightboxImage.removeAttribute("src");
+      }
+
+      async function openImageLightbox(sourceImage, requestFullscreen = false) {
+        if (!lightbox || !lightboxImage || !sourceImage) return;
+        loadImage(sourceImage);
+        lightbox.dataset.imageKind = sourceImage.dataset.imageKind || "vehicle";
+        lightboxImage.src = sourceImage.currentSrc || sourceImage.src;
+        lightboxImage.alt = sourceImage.alt;
+        if (!lightbox.open) lightbox.showModal();
+
+        if (!requestFullscreen) return;
+        try {
+          await lightbox.requestFullscreen();
+          if (
+            screen.orientation &&
+            typeof screen.orientation.lock === "function"
+          ) {
+            await screen.orientation.lock("landscape").catch(() => {});
+          }
+        } catch (_) {
+          announcer.textContent =
+            "Map enlarged. Rotate your phone for the widest view.";
+        }
+      }
+
+      function setupImageLightbox() {
+        if (!lightbox || !lightboxImage || !lightboxStage || !lightboxClose) return;
+
+        expandableImages.forEach((image) => {
+          image.addEventListener("click", () => openImageLightbox(image));
+          image.addEventListener("keydown", (event) => {
+            if (event.key !== "Enter" && event.key !== " ") return;
+            event.preventDefault();
+            openImageLightbox(image);
+          });
+        });
+        lightboxClose.addEventListener("click", closeImageLightbox);
+        lightboxStage.addEventListener("click", (event) => {
+          if (event.target === lightboxStage) closeImageLightbox();
+        });
+        lightbox.addEventListener("cancel", (event) => {
+          event.preventDefault();
+          closeImageLightbox();
+        });
       }
 
       function activateVehicle(vehicleId) {
@@ -1967,22 +2132,7 @@
               setScale(1);
             }
             if (action === "fullscreen") {
-              try {
-                if (document.fullscreenElement) {
-                  await document.exitFullscreen();
-                } else {
-                  await shell.requestFullscreen();
-                  if (
-                    screen.orientation &&
-                    typeof screen.orientation.lock === "function"
-                  ) {
-                    await screen.orientation.lock("landscape").catch(() => {});
-                  }
-                }
-              } catch (_) {
-                announcer.textContent =
-                  "Full-screen mode is not available in this browser.";
-              }
+              await openImageLightbox(image, true);
             }
           });
         });
@@ -2076,6 +2226,7 @@
         applyTransform();
       }
 
+      setupImageLightbox();
       setupMapViewer();
       activeProduct = "";
       activateProduct("solution-map");
