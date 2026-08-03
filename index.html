@@ -997,7 +997,7 @@
 
       .vehicle-solution-nav {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
       .vehicle-solution-select {
@@ -1154,7 +1154,7 @@
           <li>
             <button class="product-tab product-tab--overview product-select" type="button" data-product="vehicle-solutions" aria-controls="product-vehicle-solutions">
               <strong>Complete Vehicle Solutions</strong>
-              <span>Haul, Excavator, Diesel</span>
+              <span>Excavator and Haul Truck</span>
             </button>
           </li>
         </ul>
@@ -1163,6 +1163,18 @@
       <p class="nav-label nav-label--products">Products</p>
       <nav aria-label="Mining product range">
         <ul class="product-nav">
+          <li>
+            <button class="product-tab product-select" type="button" data-product="m10" aria-controls="product-m10">
+              <strong>M10</strong>
+              <span>Mobile DVR</span>
+            </button>
+          </li>
+          <li>
+            <button class="product-tab product-select" type="button" data-product="mp9" aria-controls="product-mp9">
+              <strong>MP9</strong>
+              <span>SerDes Screen</span>
+            </button>
+          </li>
           <li>
             <button class="product-tab product-select" type="button" data-product="c46" aria-controls="product-c46">
               <strong>C46</strong>
@@ -1187,18 +1199,6 @@
               <span>Cabin Camera</span>
             </button>
           </li>
-          <li>
-            <button class="product-tab product-select" type="button" data-product="m10" aria-controls="product-m10">
-              <strong>M10</strong>
-              <span>Mobile DVR</span>
-            </button>
-          </li>
-          <li>
-            <button class="product-tab product-select" type="button" data-product="mp9" aria-controls="product-mp9">
-              <strong>MP9</strong>
-              <span>SerDes Screen</span>
-            </button>
-          </li>
         </ul>
       </nav>
     </aside>
@@ -1215,12 +1215,12 @@
           <ul class="mobile-product-nav">
             <li><button class="mobile-tab product-select" type="button" data-product="solution-map" aria-controls="product-solution-map" aria-current="page">Map</button></li>
             <li><button class="mobile-tab product-select" type="button" data-product="vehicle-solutions" aria-controls="product-vehicle-solutions">Vehicle Solutions</button></li>
+            <li><button class="mobile-tab product-select" type="button" data-product="m10" aria-controls="product-m10">M10</button></li>
+            <li><button class="mobile-tab product-select" type="button" data-product="mp9" aria-controls="product-mp9">MP9</button></li>
             <li><button class="mobile-tab product-select" type="button" data-product="c46" aria-controls="product-c46">C46</button></li>
             <li><button class="mobile-tab product-select" type="button" data-product="c53" aria-controls="product-c53">C53</button></li>
             <li><button class="mobile-tab product-select" type="button" data-product="c29n" aria-controls="product-c29n">C29N</button></li>
             <li><button class="mobile-tab product-select" type="button" data-product="c34" aria-controls="product-c34">C34</button></li>
-            <li><button class="mobile-tab product-select" type="button" data-product="m10" aria-controls="product-m10">M10</button></li>
-            <li><button class="mobile-tab product-select" type="button" data-product="mp9" aria-controls="product-mp9">MP9</button></li>
           </ul>
         </nav>
       </header>
@@ -1274,7 +1274,7 @@
           id="product-vehicle-solutions"
           data-product-page="vehicle-solutions"
           data-page-title="Complete Vehicle Solutions | Streamax Mining"
-          data-description="Explore complete Streamax safety solutions for haul trucks, excavators, and diesel trucks."
+          data-description="Explore complete Streamax safety solutions for excavators and haul trucks."
           hidden
         >
           <header class="source-header">
@@ -1285,34 +1285,18 @@
           </header>
 
           <nav class="vehicle-solution-nav" aria-label="Vehicle solution selection">
-            <button class="vehicle-solution-select" type="button" data-vehicle-solution="haul-truck" aria-current="page">Haul Truck</button>
-            <button class="vehicle-solution-select" type="button" data-vehicle-solution="excavator">Excavator</button>
-            <button class="vehicle-solution-select" type="button" data-vehicle-solution="diesel-truck">Diesel Truck</button>
+            <button class="vehicle-solution-select" type="button" data-vehicle-solution="excavator" aria-current="page">Excavator</button>
+            <button class="vehicle-solution-select" type="button" data-vehicle-solution="haul-truck">Haul Truck</button>
           </nav>
 
           <div class="vehicle-solution-stage">
-            <img
-              class="vehicle-solution-image expandable-image"
-              data-vehicle-image="haul-truck"
-              data-src="./assets/haul-truck-solution.webp"
-              width="1426"
-              height="2141"
-              alt="Complete Streamax haul truck safety solution with vehicle, cameras, modules, and delivered value"
-              aria-label="Open haul truck solution full screen"
-              role="button"
-              tabindex="0"
-              loading="lazy"
-              decoding="async"
-              data-expand-image
-              data-image-kind="vehicle"
-            >
             <img
               class="vehicle-solution-image expandable-image"
               data-vehicle-image="excavator"
               data-src="./assets/excavator-solution.webp"
               width="1426"
               height="2141"
-              alt="Complete Streamax excavator safety solution with vehicle, cameras, modules, and delivered value"
+              alt="Complete Streamax excavator safety solution from page 3 of the mining trifold brochure"
               aria-label="Open excavator solution full screen"
               role="button"
               tabindex="0"
@@ -1320,22 +1304,25 @@
               decoding="async"
               data-expand-image
               data-image-kind="vehicle"
-              hidden
+              data-source-document="三折页_矿山.pdf"
+              data-source-page="3"
             >
             <img
               class="vehicle-solution-image expandable-image"
-              data-vehicle-image="diesel-truck"
-              data-src="./assets/diesel-truck-solution.webp"
+              data-vehicle-image="haul-truck"
+              data-src="./assets/haul-truck-solution.webp"
               width="1426"
               height="2141"
-              alt="Complete Streamax diesel truck safety solution with vehicle, cameras, modules, and delivered value"
-              aria-label="Open diesel truck solution full screen"
+              alt="Complete Streamax haul truck safety solution from page 4 of the mining trifold brochure"
+              aria-label="Open haul truck solution full screen"
               role="button"
               tabindex="0"
               loading="lazy"
               decoding="async"
               data-expand-image
               data-image-kind="vehicle"
+              data-source-document="三折页_矿山.pdf"
+              data-source-page="4"
               hidden
             >
           </div>
@@ -1930,12 +1917,12 @@
       const productIds = [
         "solution-map",
         "vehicle-solutions",
+        "m10",
+        "mp9",
         "c46",
         "c53",
         "c29n",
         "c34",
-        "m10",
-        "mp9",
       ];
       const validProducts = new Set(productIds);
       const selectors = [...document.querySelectorAll(".product-select")];
@@ -1957,7 +1944,7 @@
       const announcer = document.querySelector("#product-announcer");
       const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
       let activeProduct = "";
-      let activeVehicle = "haul-truck";
+      let activeVehicle = "excavator";
 
       function loadImage(image) {
         if (!image) return;
